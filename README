@@ -11,6 +11,7 @@ There may be some minor more work for n machines, which is reasonable.
 Creating one machine should be as easy as
 
    creature machine add <name>
+   creature pool add <name> <path>
    creature storage add <name>
    creature machine add-storage <machine-name> <storage-name>
 
@@ -20,6 +21,41 @@ Installing a machine should be as easy as inserting a cd/dvd:
    creature machine add-optical <machine-name> <optical-name>
    creature machine select-boot <machine-name> <optical-name>
 
+
+Getting started
+---------------
+
+For the impatient, cut and paste the following into the shell:
+
+POOL_HOME=/home/services/vm/pool
+SUPERVISOR=qemu
+
+creature pool add default $POOL_HOME
+creature storage add vm1 default
+creature supervisor default $SUPERVISOR
+creature nic add vm1 default ???????
+
+Tada, you've your first virtual machine created, 
+
+
+API
+---
+You can use creature through any of it's cli commands.
+
+   creature machine {add, del, default, info, list, link, start, status, stop}
+   creature pool {add, dev, info, list}
+   creature storage {add, del, default, info, list, move}
+   creature machine $name link storage:<storage-name>
+   creature net {add, del, info, list}
+
+   creature supervisor {add, del, default} ???????
+
+storage
+~~~~~~~
+      add <name> <path>
+      del <name>
+      default <name>
+      move <name> <newpool>
 
 The idea
 --------

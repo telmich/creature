@@ -1,3 +1,40 @@
 Manage virtual monsters^Wmachines
 ----------------------------------
 Nico Schottelius, 2010-01-09
+
+
+What I want to do 
+-----------------
+Easily create, install, configure and manage one to n virtual machines.
+There may be some minor more work for n machines, which is reasonable.
+
+Creating one machine should be as easy as
+
+   creature machine add <name>
+   creature storage add <name>
+   creature machine add-storage <machine-name> <storage-name>
+
+Installing a machine should be as easy as inserting a cd/dvd:
+
+   creature optical add <name>
+   creature machine add-optical <machine-name> <optical-name>
+   creature machine select-boot <machine-name> <optical-name>
+
+
+The idea
+--------
+
+Install server needed,
+configuration done with configuration management (usual split).
+
+
+Installation servers
+~~~~~~~~~~~~~~~~~~~~~
+- fai
+- preseed
+- kickstart
+
+
+Configuration servers
+~~~~~~~~~~~~~~~~~~~~~
+puppet

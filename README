@@ -29,11 +29,14 @@ For the impatient, cut and paste the following into the shell:
 
 POOL_HOME=/home/services/vm/pool
 SUPERVISOR=qemu
+VMNAME=vm1
 
 creature pool add default $POOL_HOME
-creature storage add vm1 default
+creature storage add $VMNAME default
 creature supervisor default $SUPERVISOR
-creature nic add vm1 default ???????
+creature nic add vm1
+creature machine add $name
+creature machine link $VMNAME storage $VMNAME
 
 Tada, you've your first virtual machine created, 
 
@@ -42,13 +45,18 @@ API
 ---
 You can use creature through any of it's cli commands.
 
-   creature machine {add, del, default, info, list, link, start, status, stop}
-   creature pool {add, dev, info, list}
-   creature storage {add, del, default, info, list, move}
-   creature machine $name link storage:<storage-name>
+   creature machine  {add, del, default, info, list, link, start, status, stop}
+   creature pool     {add, default, dev, info, list}
+   creature storage  {add, del, default, info, list, move}
    creature net {add, del, info, list}
 
+   creature template {add, del, default, info, list, link, start, status, stop}
+
    creature supervisor {add, del, default} ???????
+
+machine
+~~~~~~~
+   add <name> [template <name>]
 
 storage
 ~~~~~~~

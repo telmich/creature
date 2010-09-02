@@ -228,29 +228,22 @@ version()
 
 # "Main"
 [ "$#" -gt 0 ] || help
-cmd="$1"
 
-
-#
-# Check for configuraton directory
-#
+# Configuraton directory
 [ -d "${CREATURE_CONF}" ] || _exit_err "No Configuration found in " \
    "\"${CREATURE_CONF}\" (\$CREATURE_CONF), try creature init"
 
-echo $pCOMMANDS
+#echo $pCOMMANDS
 
+cmd="$1"; shift
 if (echo "$cmd" | grep -qE "$pCOMMANDS"); then
-   echo jep
+   $cmd "$@"
 else
    help
 fi
 
 # no code beyond here is useful so far
 exit 0
-
-#
-# Functions
-#
 
 # time displaying echo
 _techo()

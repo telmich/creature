@@ -33,7 +33,7 @@ __myname=${0##*/}; __abs_myname="$__abs_mydir/$__myname"
 #
 CREATURE_CONF="${CREATURE_CONF:-/etc/creature}"
 CPOOL="${CREATURE_CONF}/pools"
-CDEFAULTS="${CREATURE_CONF}/defaults"
+CPOOLDEFAULT="${CPOOL}/.default"
 
 export TMP="$(mktemp "/tmp/${__myname}.XXXXXX")"
 VERSION="0.1"
@@ -48,12 +48,13 @@ FULL_VERSION="creature ${VERSION} (${RELEASE})"
 CDATE="date +%Y%m%d-%H%M"
 DDATE="date +%Y-%m-%d-%H:%M:%S"
 SDATE="date +%s"
-COMMANDS="help pool_add pool_default storage_add version"
+COMMANDS="help pool_add pool_default pool_default_show storage_add version"
 pCOMMANDS="$(echo ^${COMMANDS}\$ | sed 's/ /|/g')"
 
 help_help="Show this help screen"
 pool_add_help="<name> <path>: Create a new storage pool"
 pool_default_help="<name>: Setup default storage pool"
+pool_default_show_help="Show default pool"
 storage_add_help="<name> <size> [pool]: Create new storage"
 version_help="Print version information"
 
@@ -216,12 +217,25 @@ pool_default()
 
    [ -d "${pool_dir}" ] || creature_cmderrormsg "${pool_dir} not existing" 
 
-   echo "${name}" > "${CPOOL}/.default"
+   echo "${name}" > "${CPOOLDEFAULT}"
+}
+
+pool_default_show()
+{
+   cat "${CPOOLDEFAULT}"
 }
 
 storage_add()
 {
    creature_args -atleast name size -- "$@"
+
+   if [ "$3" ]; then
+      pool="$3"
+   else
+      pool=""
+   fi
+
+   exit 3
 
    pool_dir="${CPOOL}/${name}"
 

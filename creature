@@ -61,6 +61,12 @@ pool_add_help="<name> <path>: Create a new storage pool"
 version_help="Print version information"
 
 
+#
+# catch signals (FIXME: not needed currently - remove or reuse)
+#
+#trap "rm -f \"${TMP}\"" 1 2 15
+
+
 # Write message, prefixed by scriptname
 creature_msg()
 {
@@ -105,8 +111,6 @@ creature_args_optional()
       echo "Skipping $creature_args_next ..."
       shift "${creature_args_next}"
    fi
-
-
 }
 
 # Require some command line parameters and allow optional parameters
@@ -230,9 +234,10 @@ cmd="$1"
 [ -d "${CREATURE_CONF}" ] || _exit_err "No Configuration found in " \
    "\"${CREATURE_CONF}\" (\$CREATURE_CONF), try creature init"
 
-set -x
+#set -x
 
 case "$cmd" in
+   # FIXME: reuse variable from above
    help|version|pool_add)
       shift; $cmd "$@"
    ;;
@@ -244,17 +249,6 @@ esac
 
 # no code beyond here is useful so far
 exit 0
-
-#
-# unset values
-#
-PARALLEL=""
-USE_ALL=""
-
-#
-# catch signals
-#
-trap "rm -f \"${TMP}\"" 1 2 15
 
 #
 # Functions

@@ -1,0 +1,18 @@
+The idea
+--------
+
+Install server needed,
+configuration done with configuration management (usual split).
+
+
+Installation servers
+~~~~~~~~~~~~~~~~~~~~~
+- fai 
+- preseed
+- kickstart
+
+
+Configuration servers
+~~~~~~~~~~~~~~~~~~~~~
+puppet
+

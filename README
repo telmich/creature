@@ -50,7 +50,7 @@ You can use creature through any of it's cli commands.
    creature storage  {add, del, default, info, list, move}
    creature net {add, del, info, list}
 
-   creature template {add, del, default, info, list, link, start, status, stop}
+   creature template {add, del, default, info, list}
 
    creature supervisor {add, del, default} ???????
 
@@ -64,21 +64,3 @@ storage
       del <name>
       default <name>
       move <name> <newpool>
-
-The idea
---------
-
-Install server needed,
-configuration done with configuration management (usual split).
-
-
-Installation servers
-~~~~~~~~~~~~~~~~~~~~~
-- fai
-- preseed
-- kickstart
-
-
-Configuration servers
-~~~~~~~~~~~~~~~~~~~~~
-puppet

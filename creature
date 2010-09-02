@@ -79,6 +79,12 @@ creature_errormsg()
    exit 1
 }
 
+creature_cmderrormsg()
+{
+   creature_msg "${cmd}: $@"
+   exit 1
+}
+
 # argument(s) should not be empty
 creature_notempty()
 {
@@ -167,10 +173,10 @@ creature_args()
 
    # Need the exact number of arguments
    if [ "${creature_args_exact}" = "exact" -a "$#" -ne "$count" ]; then
-      creature_errormsg ${cmd}: ${arglist}
+      creature_cmderrormsg ${arglist}
    # Need at least given number of arguments
    elif [ "${creature_args_exact}" = "atleast" -a "$#" -lt "$count" ]; then
-      creature_errormsg ${cmd} ${arglist}
+      creature_cmderrormsg ${arglist}
    fi
 
    # assign values
@@ -209,6 +215,16 @@ eof
 pool_add()
 {
    creature_args name location -- "$@"
+
+   pool_dir="${CPOOL}/${name}"
+
+   mkdir -p "${pool_dir}"
+   echo "${location}" > "${pool_dir}/location"
+}
+
+pool_default()
+{
+   creature_args name -- "$@"
 
    pool_dir="${CPOOL}/${name}"
 

@@ -10,8 +10,8 @@ There may be some minor more work for n machines, which is reasonable.
 
 Creating one machine should be as easy as
 
-   creature machine add <name>
-   creature pool add <name> <path>
+   creature machine_add <name>
+   creature pool_add <name> <path>
    creature storage add <name>
    creature machine add-storage <machine-name> <storage-name>
 
@@ -37,13 +37,11 @@ poolname="fastdisks"
 poollocation="/home/services/vms/fastdisks"
 storagename="myfirstdisk"
 storagesize="10G"
+supervisor=qemu
+vmname=Vm1
 
-POOL_HOME=/home/services/vm/pool
-SUPERVISOR=qemu
-VMNAME=vm1
-
-creature storage-pool add $pooltype $poolname $poollocation
-creature storage-pool default $poolname
+creature pool_add $pooltype $poolname $poollocation
+creature pool_default $poolname
 creature pool add default $POOL_HOME
 creature storage add $VMNAME default
 creature supervisor default $SUPERVISOR

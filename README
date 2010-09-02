@@ -22,10 +22,21 @@ Installing a machine should be as easy as inserting a cd/dvd:
    creature machine select-boot <machine-name> <optical-name>
 
 
-Getting started
----------------
+Requirements
+------------
+qemu
+
+
+Getting started / First time usage
+----------------------------------
 
 For the impatient, cut and paste the following into the shell:
+
+pooltype="dir"
+poolname="fastdisks"
+poollocation="/home/services/vms/fastdisks"
+storagename="myfirstdisk"
+storagesize="10G"
 
 POOL_HOME=/home/services/vm/pool
 SUPERVISOR=qemu
@@ -40,22 +51,10 @@ creature machine link $VMNAME storage $VMNAME
 
 Tada, you've your first virtual machine created, 
 
-Requirements
-------------
-qemu
-
-
-First time usage
-----------------
 
 Cut and paste the following shell code:
 
 --------------------------------------------------------------------------------
-pooltype="dir"
-poolname="fastdisks"
-poollocation="/home/services/vms/fastdisks"
-storagename="myfirstdisk"
-storagesize="10G"
 
 creature storage-pool add $pooltype $poolname $poollocation
 creature storage-pool default $poolname

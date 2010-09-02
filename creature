@@ -54,19 +54,40 @@ CDATE="date +%Y%m%d-%H%M"
 DDATE="date +%Y-%m-%d-%H:%M:%S"
 SDATE="date +%s"
 
+help()
+{
+   cat << eof
+${__myname}: <command> <options>
+
+   creature manages virtual monsters
+
+   -a, --all:           Backup all sources specified in ${CSOURCES}
+   -p, --parallel:      Parallelise backup processes
+   -v, --verbose:       Be very verbose (uses set -x)
+   help:                Show this help screen
+   version:             Print version information
+
+   This is version ${VERSION}, released on ${RELEASE}
+   (the first version was written on 2010-09-ZZ by Nico Schottelius).
+
+   Retrieve latest creature at http://www.nico.schottelius.org/software/creature/
+eof
+   exit 0
+}
+
 version()
 {
    echo "${FULL_VERSION}"
    exit 0
 }
 
+[ "$#" -gt 0 ] || help
 cmd="$1"
 
 case "$cmd" in
    version)
       shift
       $cmd "$@"
-
    ;;
    *)
       usage
@@ -140,27 +161,6 @@ delete_from_file()
    _techo "Removing $@ ..."
    [ "${VVERBOSE}" ] && echo rm "$@"
    pcmd rm -rf "$@" || _exit_err "Removing $@ failed."
-}
-
-usage()
-{
-   cat << eof
-${__myname}: [args] <interval name> <sources to backup>
-
-   creature creates (pseudo) incremental backups
-
-   -h, --help:          Show this help screen
-   -a, --all:           Backup all sources specified in ${CSOURCES}
-   -p, --parallel:      Parallelise backup processes
-   -v, --verbose:       Be very verbose (uses set -x)
-   -V, --version:       Print version information
-
-   This is version ${VERSION}, released on ${RELEASE}
-   (the first version was written on 2005-12-05 by Nico Schottelius).
-
-   Retrieve latest creature at http://www.nico.schottelius.org/software/creature/
-eof
-   exit 0
 }
 
 #

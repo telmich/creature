@@ -54,10 +54,11 @@ CDATE="date +%Y%m%d-%H%M"
 DDATE="date +%Y-%m-%d-%H:%M:%S"
 SDATE="date +%s"
 
-COMMANDS="help pool_add version"
+COMMANDS="help pool_add pool_default version"
 pCOMMANDS="$(echo ${COMMANDS} | sed 's/ /|/g')"
 help_help="Show this help screen"
 pool_add_help="<name> <path>: Create a new storage pool"
+pool_default_help="<name>: Setup default storage pool"
 version_help="Print version information"
 
 
@@ -228,6 +229,8 @@ pool_default()
 
    pool_dir="${CPOOL}/${name}"
 
+   [ ! -d ${pool_dir} ] || creature_cmderrormsg "${pool_dir} not existing" 
+
    mkdir -p "${pool_dir}"
    echo "${location}" > "${pool_dir}/location"
 }
@@ -254,7 +257,7 @@ cmd="$1"
 
 case "$cmd" in
    # FIXME: reuse variable from above
-   help|version|pool_add)
+   help|version|pool_add|pool_default)
       shift; $cmd "$@"
    ;;
    *)
@@ -288,46 +291,3 @@ add_name()
 {
    awk "{ print \"[${name}] \" \$0 }"
 }
-
-#
-# Prepend "ssh ${remote_host}", if backing up to a remote host
-#
-pcmd()
-{
-   [ "${remote_host}" ] && set -- "ssh" "${remote_host}" "$@"
-
-   "$@"
-}
-
-#
-# ssh-"feature": we cannot do '... read ...; ssh  ...; < file',
-# because ssh reads stdin! -n does not work -> does not ask for password
-# Also allow deletion for files without the given suffix
-#
-delete_from_file()
-{
-   file="$1"; shift
-   suffix="" # It will be set, if deleting incomplete backups.
-   [ $# -eq 1 ] && suffix="$1" && shift
-   while read to_remove; do
-      set -- "$@" "${to_remove}"
-      if [ "${suffix}" ]; then
-         to_remove_no_suffix="$(echo ${to_remove} | sed "s/$suffix\$//")"
-         set -- "$@" "${to_remove_no_suffix}"
-      fi
-   done < "${file}"
-   _techo "Removing $@ ..."
-   [ "${VVERBOSE}" ] && echo rm "$@"
-   pcmd rm -rf "$@" || _exit_err "Removing $@ failed."
-}
-
-
-#
-# Setup interval
-#
-if [ $# -ge 1 ]; then
-   export INTERVAL="$1"
-   shift
-else
-   usage
-fi

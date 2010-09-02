@@ -17,8 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with creature. If not, see <http://www.gnu.org/licenses/>.
 #
-# Initially written for SyGroup (www.sygroup.ch)
-# Date: Mon Nov 14 11:45:11 CET 2005
 
 # Error upon expanding unset variables:
 set -u
@@ -36,9 +34,6 @@ __myname=${0##*/}; __abs_myname="$__abs_mydir/$__myname"
 CREATURE_CONF="${CREATURE_CONF:-/etc/creature}"
 CPOOL="${CREATURE_CONF}/pools"
 CDEFAULTS="${CREATURE_CONF}/defaults"
-CPREEXEC="${CDEFAULTS}/pre_exec"
-CPOSTEXEC="${CDEFAULTS}/post_exec"
-CMARKER=".creature-marker"
 
 export TMP="$(mktemp "/tmp/${__myname}.XXXXXX")"
 VERSION="0.1"
@@ -56,6 +51,7 @@ SDATE="date +%s"
 
 COMMANDS="help pool_add pool_default version"
 pCOMMANDS="$(echo ${COMMANDS} | sed 's/ /|/g')"
+
 help_help="Show this help screen"
 pool_add_help="<name> <path>: Create a new storage pool"
 pool_default_help="<name>: Setup default storage pool"
@@ -107,17 +103,6 @@ creature_file_read()
 
    cat "${creature_file}" || creature_errormsg "Cannot read file ${creature_file}"
 
-}
-
-# Have a look whether there are optional parameters left
-creature_args_optional()
-{
-
-   # creature_args ran before, skip already checked items
-   if [ "${creature_args_next}" ]; then
-      echo "Skipping $creature_args_next ..."
-      shift "${creature_args_next}"
-   fi
 }
 
 # Require some command line parameters and allow optional parameters
@@ -206,7 +191,7 @@ eof
    cat << eof
 
    This is version ${VERSION}, released on ${RELEASE}
-   (the first version was written on 2010-09-ZZ by Nico Schottelius).
+   (the first version was written on 2010-09-02 by Nico Schottelius).
 
    Retrieve latest creature at http://www.nico.schottelius.org/software/creature/
 eof

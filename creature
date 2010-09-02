@@ -229,10 +229,9 @@ pool_default()
 
    pool_dir="${CPOOL}/${name}"
 
-   [ ! -d ${pool_dir} ] || creature_cmderrormsg "${pool_dir} not existing" 
+   [ -d "${pool_dir}" ] || creature_cmderrormsg "${pool_dir} not existing" 
 
-   mkdir -p "${pool_dir}"
-   echo "${location}" > "${pool_dir}/location"
+   echo "${name}" > "${CPOOL}/.default"
 }
 
 

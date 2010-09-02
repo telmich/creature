@@ -42,8 +42,9 @@ vmname=Vm1
 
 creature pool_add $pooltype $poolname $poollocation
 creature pool_default $poolname
-creature pool add default $POOL_HOME
-creature storage add $VMNAME default
+
+creature storage_add $VMNAME default
+
 creature supervisor default $SUPERVISOR
 creature nic add vm1
 creature machine add $name

@@ -254,9 +254,11 @@ cmd="$1"
 
 #set -x
 
+echo $pCOMMANDS
 case "$cmd" in
    # FIXME: reuse variable from above
    help|version|pool_add|pool_default)
+   $pCOMMANDS)
       shift; $cmd "$@"
    ;;
    *)

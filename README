@@ -42,6 +42,8 @@ POOL_HOME=/home/services/vm/pool
 SUPERVISOR=qemu
 VMNAME=vm1
 
+creature storage-pool add $pooltype $poolname $poollocation
+creature storage-pool default $poolname
 creature pool add default $POOL_HOME
 creature storage add $VMNAME default
 creature supervisor default $SUPERVISOR
@@ -56,8 +58,6 @@ Cut and paste the following shell code:
 
 --------------------------------------------------------------------------------
 
-creature storage-pool add $pooltype $poolname $poollocation
-creature storage-pool default $poolname
 creature storage add $storagename $storagesize
 --------------------------------------------------------------------------------
 

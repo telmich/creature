@@ -54,6 +54,8 @@ CDATE="date +%Y%m%d-%H%M"
 DDATE="date +%Y-%m-%d-%H:%M:%S"
 SDATE="date +%s"
 
+COMMANDS="help pool_create version"
+
 help()
 {
    cat << eof
@@ -61,9 +63,6 @@ ${__myname}: <command> <options>
 
    creature manages virtual monsters
 
-   -a, --all:           Backup all sources specified in ${CSOURCES}
-   -p, --parallel:      Parallelise backup processes
-   -v, --verbose:       Be very verbose (uses set -x)
    help:                Show this help screen
    version:             Print version information
 
@@ -75,19 +74,24 @@ eof
    exit 0
 }
 
+pool_create()
+{
+}
+
+
 version()
 {
    echo "${FULL_VERSION}"
    exit 0
 }
 
+# "Main"
 [ "$#" -gt 0 ] || help
 cmd="$1"
 
 case "$cmd" in
    version)
-      shift
-      $cmd "$@"
+      shift; $cmd "$@"
    ;;
    *)
       usage
@@ -163,37 +167,6 @@ delete_from_file()
    pcmd rm -rf "$@" || _exit_err "Removing $@ failed."
 }
 
-#
-# Parse options
-#
-while [ "$#" -ge 1 ]; do
-   case "$1" in
-      -a|--all)
-         USE_ALL=1
-         ;;
-      -p|--parallel)
-         PARALLEL=1
-         ;;
-      -v|--verbose)
-         set -x
-         ;;
-      -V|--version)
-         display_version
-         ;;
-      --)
-         # ignore the -- itself
-         shift
-         break
-         ;;
-      -h|--help|-*)
-         usage
-         ;;
-      *)
-         break
-         ;;
-   esac
-   shift
-done
 
 #
 # Setup interval

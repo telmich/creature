@@ -40,6 +40,28 @@ creature machine link $VMNAME storage $VMNAME
 
 Tada, you've your first virtual machine created, 
 
+Requirements
+------------
+qemu
+
+
+First time usage
+----------------
+
+Cut and paste the following shell code:
+
+--------------------------------------------------------------------------------
+pooltype="dir"
+poolname="fastdisks"
+poollocation="/home/services/vms/fastdisks"
+storagename="myfirstdisk"
+storagesize="10G"
+
+creature storage-pool add $pooltype $poolname $poollocation
+creature storage-pool default $poolname
+creature storage add $storagename $storagesize
+--------------------------------------------------------------------------------
+
 
 API
 ---
@@ -47,12 +69,17 @@ You can use creature through any of it's cli commands.
 
    creature machine  {add, del, default, info, list, link, start, status, stop}
    creature pool     {add, default, dev, info, list}
+      pool_type := {dir}
    creature storage  {add, del, default, info, list, move}
+      add <name> <poolname>
+      storage_type := {raw, qcow2, vmdk}
    creature net {add, del, info, list}
 
    creature template {add, del, default, info, list}
 
-   creature supervisor {add, del, default} ???????
+   creature supervisor {add, del, default}
+      add <name> <type>
+         type: qemu
 
 machine
 ~~~~~~~
@@ -64,3 +91,5 @@ storage
       del <name>
       default <name>
       move <name> <newpool>
+
+

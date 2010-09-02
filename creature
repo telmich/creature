@@ -41,8 +41,8 @@ CPOSTEXEC="${CDEFAULTS}/post_exec"
 CMARKER=".creature-marker"
 
 export TMP="$(mktemp "/tmp/${__myname}.XXXXXX")"
-VERSION="0.8.1"
-RELEASE="2010-03-26"
+VERSION="0.1"
+RELEASE="2010-09-XX"
 HALF_VERSION="creature ${VERSION}"
 FULL_VERSION="creature ${VERSION} (${RELEASE})"
 
@@ -53,6 +53,28 @@ FULL_VERSION="creature ${VERSION} (${RELEASE})"
 CDATE="date +%Y%m%d-%H%M"
 DDATE="date +%Y-%m-%d-%H:%M:%S"
 SDATE="date +%s"
+
+version()
+{
+   echo "${FULL_VERSION}"
+   exit 0
+}
+
+cmd="$1"
+
+case "$cmd" in
+   version)
+      shift
+      $cmd "$@"
+
+   ;;
+   *)
+      usage
+   ;;
+esac
+
+# no code beyond here is useful so far
+exit 0
 
 #
 # unset values
@@ -118,12 +140,6 @@ delete_from_file()
    _techo "Removing $@ ..."
    [ "${VVERBOSE}" ] && echo rm "$@"
    pcmd rm -rf "$@" || _exit_err "Removing $@ failed."
-}
-
-display_version()
-{
-   echo "${FULL_VERSION}"
-   exit 0
 }
 
 usage()

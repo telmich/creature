@@ -1,21 +1,21 @@
 #!/bin/sh
 #
-# 2005-2009 Nico Schottelius (nico-ccollect at schottelius.org)
+# 2010 Nico Schottelius (nico-creature at schottelius.org)
 #
-# This file is part of ccollect.
+# This file is part of creature.
 #
-# ccollect is free software: you can redistribute it and/or modify
+# creature is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# ccollect is distributed in the hope that it will be useful,
+# creature is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with ccollect. If not, see <http://www.gnu.org/licenses/>.
+# along with creature. If not, see <http://www.gnu.org/licenses/>.
 #
 # Initially written for SyGroup (www.sygroup.ch)
 # Date: Mon Nov 14 11:45:11 CET 2005
@@ -33,18 +33,18 @@ __myname=${0##*/}; __abs_myname="$__abs_mydir/$__myname"
 #
 # where to find our configuration and temporary file
 #
-CCOLLECT_CONF="${CCOLLECT_CONF:-/etc/ccollect}"
-CSOURCES="${CCOLLECT_CONF}/sources"
-CDEFAULTS="${CCOLLECT_CONF}/defaults"
+CREATURE_CONF="${CREATURE_CONF:-/etc/creature}"
+CSOURCES="${CREATURE_CONF}/sources"
+CDEFAULTS="${CREATURE_CONF}/defaults"
 CPREEXEC="${CDEFAULTS}/pre_exec"
 CPOSTEXEC="${CDEFAULTS}/post_exec"
-CMARKER=".ccollect-marker"
+CMARKER=".creature-marker"
 
 export TMP="$(mktemp "/tmp/${__myname}.XXXXXX")"
 VERSION="0.8.1"
 RELEASE="2010-03-26"
-HALF_VERSION="ccollect ${VERSION}"
-FULL_VERSION="ccollect ${VERSION} (${RELEASE})"
+HALF_VERSION="creature ${VERSION}"
+FULL_VERSION="creature ${VERSION} (${RELEASE})"
 
 #
 # CDATE: how we use it for naming of the archives
@@ -131,7 +131,7 @@ usage()
    cat << eof
 ${__myname}: [args] <interval name> <sources to backup>
 
-   ccollect creates (pseudo) incremental backups
+   creature creates (pseudo) incremental backups
 
    -h, --help:          Show this help screen
    -a, --all:           Backup all sources specified in ${CSOURCES}
@@ -142,7 +142,7 @@ ${__myname}: [args] <interval name> <sources to backup>
    This is version ${VERSION}, released on ${RELEASE}
    (the first version was written on 2005-12-05 by Nico Schottelius).
 
-   Retrieve latest ccollect at http://www.nico.schottelius.org/software/ccollect/
+   Retrieve latest creature at http://www.nico.schottelius.org/software/creature/
 eof
    exit 0
 }
@@ -192,8 +192,8 @@ fi
 #
 # Check for configuraton directory
 #
-[ -d "${CCOLLECT_CONF}" ] || _exit_err "No configuration found in " \
-   "\"${CCOLLECT_CONF}\" (is \$CCOLLECT_CONF properly set?)"
+[ -d "${CREATURE_CONF}" ] || _exit_err "No configuration found in " \
+   "\"${CREATURE_CONF}\" (is \$CREATURE_CONF properly set?)"
 
 #
 # Create (portable!) source "array"
@@ -384,7 +384,7 @@ while [ "${source_no}" -lt "${no_sources}" ]; do
    export remote_host
 
    #
-   # Parameters: ccollect defaults, configuration options, user options
+   # Parameters: creature defaults, configuration options, user options
    #
 
    #

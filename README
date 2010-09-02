@@ -35,15 +35,15 @@ For the impatient, cut and paste the following into the shell:
 pooltype="dir"
 poolname="fastdisks"
 poollocation="/home/services/vms/fastdisks"
-storagename="myfirstdisk"
+storagename="vm1"
 storagesize="10G"
+mname=vm1
 supervisor=qemu
-vmname=Vm1
 
 creature pool_add $pooltype $poolname $poollocation
 creature pool_default $poolname
 
-creature storage_add $VMNAME default
+creature storage_add $mname
 
 creature supervisor default $SUPERVISOR
 creature nic add vm1

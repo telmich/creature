@@ -48,13 +48,13 @@ FULL_VERSION="creature ${VERSION} (${RELEASE})"
 CDATE="date +%Y%m%d-%H%M"
 DDATE="date +%Y-%m-%d-%H:%M:%S"
 SDATE="date +%s"
-
-COMMANDS="help pool_add pool_default version"
+COMMANDS="help pool_add pool_default storage_add version"
 pCOMMANDS="$(echo ^${COMMANDS}\$ | sed 's/ /|/g')"
 
 help_help="Show this help screen"
 pool_add_help="<name> <path>: Create a new storage pool"
 pool_default_help="<name>: Setup default storage pool"
+storage_add_help="<name> <size> [pool]: Create new storage"
 version_help="Print version information"
 
 
@@ -219,6 +219,16 @@ pool_default()
    echo "${name}" > "${CPOOL}/.default"
 }
 
+storage_add()
+{
+   creature_args -atleast name size -- "$@"
+
+   pool_dir="${CPOOL}/${name}"
+
+   [ -d "${pool_dir}" ] || creature_cmderrormsg "${pool_dir} not existing" 
+
+   echo "${name}" > "${CPOOL}/.default"
+}
 
 version()
 {

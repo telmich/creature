@@ -50,7 +50,7 @@ DDATE="date +%Y-%m-%d-%H:%M:%S"
 SDATE="date +%s"
 
 COMMANDS="help pool_add pool_default version"
-pCOMMANDS="$(echo ${COMMANDS} | sed 's/ /|/g')"
+pCOMMANDS="$(echo ^${COMMANDS}\$ | sed 's/ /|/g')"
 
 help_help="Show this help screen"
 pool_add_help="<name> <path>: Create a new storage pool"
@@ -237,20 +237,13 @@ cmd="$1"
 [ -d "${CREATURE_CONF}" ] || _exit_err "No Configuration found in " \
    "\"${CREATURE_CONF}\" (\$CREATURE_CONF), try creature init"
 
-#set -x
-
 echo $pCOMMANDS
-case "$cmd" in
-   # FIXME: reuse variable from above
-   help|version|pool_add|pool_default)
-   $pCOMMANDS)
-      shift; $cmd "$@"
-   ;;
-   *)
-      echo $cmd $pCOMMANDS
-      help
-   ;;
-esac
+
+if (echo "$cmd" | grep -qE "$pCOMMANDS"); then
+   echo jep
+else
+   help
+fi
 
 # no code beyond here is useful so far
 exit 0
